@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1 class="display-3">Partidas de "{{ time.nome }}"</h1>
+
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Campeonato</th>
+            <th>Adversário</th>
+            <th>Placar</th>
+            <th>Local</th>
+            <th>Data</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for partida in partidas %}
+        <tr>
+            <td>{{ partida.campeonato.nome }}</td>
+            <td>
+                {% if time.id == partida.timeCasa.id %}
+                    {{ partida.timeVisitante.nome }}
+                {% else %}
+                    {{ partida.timeCasa.nome }}
+                {% endif %}
+            </td>
+            <td>
+
+                {% if time.id == partida.timeCasa.id %}
+                    {{ partida.placarCasa }} x {{ partida.placarVisitante }}
+                {% else %}
+                    {{ partida.placarVisitante }} x {{ partida.placarCasa }}
+                {% endif %}
+
+            </td>
+            <td>
+
+                {% if time.id == partida.timeCasa.id %}
+                    Time da casa
+                {% else %}
+                    Time Visitante
+                {% endif %}
+
+            </td>
+            <td>{{ partida.dataPartida|date("d/m/Y H:i") }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+{% endblock %}
+
+{% block title %}
+    Listando partidas de "{{ time.nome }}" -
+{% endblock %}
+
